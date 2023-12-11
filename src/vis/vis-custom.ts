@@ -15,7 +15,7 @@ export const filterNodeGroup = (data:any,id:number)=>{
  */
 export const chosenAllGroup = (data:any,groupName:string)=>{
     return data.filter((el:any)=>{
-        console.log(el);
+        console.log(el.group);
         return el.group === groupName
     })
 }

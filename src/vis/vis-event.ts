@@ -1,9 +1,10 @@
 import * as vis from 'vis-network'
-import {chosenAllGroup, filterNodeGroup} from './vis-custom'
+import { chosenAllGroup, filterNodeGroup } from './vis-custom'
 import { dataList } from './vis-data';
-export const registerEventListeners = (vizs: vis.Network) => {
-
+import { useVisStore } from '../store/vis-index';
+export const registerEventListeners = (vizs: vis.Network,Visible:boolean) => {
     vizs.on('click', (param) => {
+       
     });
 
     vizs.on('doubleClick', () => {
@@ -19,16 +20,19 @@ export const registerEventListeners = (vizs: vis.Network) => {
     });
 
     vizs.on('select', () => {
+
     });
     vizs.on('selectNode', (param) => {
-        console.log(filterNodeGroup(dataList.nodes,param.nodes[0]));
-
+        const store = useVisStore()
+        store.visibleModal = true
+        console.log(filterNodeGroup(dataList.nodes, param.nodes[0])[0].group);
+        vizs.updateClusteredNode(1, { color: "black" })
         const optionsCluster = {
             enabled: true,
             joinCondition: function (nodeOptions: any) {
                 // 在這裡指定條件，決定是否將節點包含在同一個集群中
-                let final = chosenAllGroup(nodeOptions,filterNodeGroup(dataList.nodes,param.nodes[0]))
-                console.log(final);
+                console.log(nodeOptions);
+                let final = chosenAllGroup(nodeOptions, filterNodeGroup(dataList.nodes, param.nodes[0].group))
                 return false
             },
         }
@@ -39,6 +43,7 @@ export const registerEventListeners = (vizs: vis.Network) => {
     });
 
     vizs.on('deselectNode', () => {
+     
     });
 
     vizs.on('deselectEdge', () => {
@@ -63,6 +68,7 @@ export const registerEventListeners = (vizs: vis.Network) => {
     });
 
     vizs.on('blurNode', () => {
+    
     });
 
     vizs.on('hoverEdge', () => {

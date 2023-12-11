@@ -220,3 +220,6 @@ div.vis-tooltip {
   white-space: nowrap;
   z-index: 5;
 }
+.modal-wrap {
+  width: 300px !important;
+}
